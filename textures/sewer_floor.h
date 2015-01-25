@@ -1,0 +1,78 @@
+#define SEWERFLOOR_WIDTH 32
+#define SEWERFLOOR_HEIGHT 32
+
+/*  Call this macro repeatedly.  After each use, the pixel data can be extracted  */
+
+#define HEADER_PIXEL(data,pixel) {\
+pixel[0] = (((data[0] - 33) << 2) | ((data[1] - 33) >> 4)); \
+pixel[1] = ((((data[1] - 33) & 0xF) << 4) | ((data[2] - 33) >> 2)); \
+pixel[2] = ((((data[2] - 33) & 0x3) << 6) | ((data[3] - 33))); \
+data += 4; \
+}
+
+static char* sewerfloor_data =
+	"'BI9'RM:(\"Q;(2U<(2U<(2U<)#!?*#1C*S=F+3EH+3EH+#AG*S=F*35D*#1C*35D"
+	"*C9E*C9E*#1C)S-B)3)B)#)B)3-C*#5G*C9J*C=J*C=J*#5H)3)E(2YA'2I=&B=:"
+	"(2U<(R]>)#!?)#!?)3%@)S-A*C9E+CII,CYM-4%O-$!O,S]N,3UL,3UL,3UK,3UL"
+	",CYM,CYL,#QK+SII+#EH*CAH*SEI+SQO,3YQ,C]R,C]R,#UP*SAK)3)E(\"U@'2I="
+	")#!@)C)B*#1D*C9E+#AG+CIJ,CYN-D)R.T=V/4EY/$AX.D9V.$1T.$1S.$1T.45U"
+	".45U.45U.$1T-T-R-$%Q,T!P-$%R.$5X.D=Z.D=Z.D9Y-T1W,CYQ*C=J)#!C(\"Q?"
+	")S-D*35F+#AJ,#QM,CYP-D)R.45V/4EZ0$Q]04U^04U^/DI[.T=X.45W.45V.D9X"
+	"/$AY/4E[/DI[/$AY.T=X.D9W.T=X/DI]/TM^/DI]/4E\\.45X-$!S+3EL)C)E(2U@"
+	"*#1E*S=H+SML-$!Q.$1U.T=X/4EZ0$Q]0DY`0DY_/TM\\/4EZ.D9W-T-T-4%R-T-T"
+	".D9W/DI[/DI[/DI[/DI[/DI[/4E[/4E[/$A[.T=Z.45X-4%T,3UP*S=J)3%D(\"Q?"
+	")C)C*C9G,#QM-D)S.D9W/4EZ/TM\\0$Q]/TM\\/DI[.T=X.D9W.$1U-$!Q,3UN,S]P"
+	"-T-T.T=X/4EZ/4EZ/DI[/TM\\/4E[.T=X.$1V-4%S,CYO+CIK+#AI)S-E(2U?'2E:"
+	")#!A*C9G,CYO.$1U/$AY/DI[/DI[/4EZ/$AY.D9W.$1U-T-T-D)S,CYO+SML,#QM"
+	"-$!Q.$1U/$AY/4EZ/4EZ/4EZ/$AY.45V-D)S,CYO+CIK*C9G*#1D)#!A'RM<&R=8"
+	")#!A*C9G,S]P.D9W/4EZ/DI[/$AY.D9W.45V-T-T-D)S-4%R-$!Q,3UN+CIK+SML"
+	",S]P-T-T.T=X/$AY/$AY.T=X.T=X.45V-D)S,CYO+3EJ*#1E)C)C(R]@'RM<&R=9"
+	"(R]@*S=H-$!Q.T=X/DI[/DI[.D9W-T-T-D)S-$!Q-4%R-4%R,S]P,#QM+CIK+SML"
+	",CYO-D)S.D9W/$AY.T=X.D9W.45V.45V-T-T,S]P+3EJ*35F)C)C)#!A(\"Q='\"A9"
+	"(R]@*S=H-$!Q.T=X/DI[/4EZ.D9W-D)S-$!Q-$!Q-$!Q-D)S-D)S,CYO,#QM,#QM"
+	",CYO-4%R.45V/$AY/$AY.D9W.$1U.$1U-T-T,S]P+CIK*35F*35F)C)C(2U>'2E:"
+	")#!A*C9G,S]P.D9W/4EZ/$AY.45V-4%R-$!Q-$!Q-4%R-D)S-T-T-4%R,CYO,3UN"
+	",CYO-4%R.45V/$AY.T=X.45V.$1U-D)S-4%R,3UN+3EJ*C9G*C9G)S-D(BY?'BI;"
+	")#!A*C9G,3UN.$1U/$AY/$AY.45V-D)S-$!Q-$!Q-D)S-T-T.$1U-T-T-4%R-$!Q"
+	"-4%R-4%R.$1U.D9W.D9W.$1U-D)S-4%R,CYO+CIK*S=H*C9G*C9G)S-D(R]@'RM<"
+	")#!A*#1E+SML-D)S/$AY/4EZ.T=X-T-T-4%R-$!Q-D)S-T-T.$1U.$1U-T-T-T-T"
+	"-D)S-D)S-T-T.45V.45V-T-T-4%R-$!Q,#QM+#AI*C9G*#1E*#1E)C)C(R]@'RM<"
+	"(BY?)C)C+3EJ-D)S/$AY/4EZ.T=X.$1U-4%R-$!Q-4%R-D)S.$1U.$1U.$1U-T-T"
+	"-D)S-D)S-T-T.$1U-T-T-D)S-$!Q,S]P,#QM+3EJ*C9G*35F)S-D)3%B(BY?'BI;"
+	"(\"Q=)3%B+#AI-$!Q.D9W.T=X.D9W.$1U-4%R-$!Q-$!Q-4%R-T-T.$1U-T-T-D)S"
+	"-4%R-4%R-D)S-D)S-4%R-$!Q,S]P,CYO,3UN+SML+CIK+#AI*C9G)C)C(BY?'BI;"
+	"(\"Q=)3%B*S=H,3UN-T-T.45V.$1U-D)S,S]P,CYO,CYO-$!Q-D)S-D)S-$!Q,S]P"
+	",S]P-$!Q-$!Q-4%R-4%R-$!Q,S]P,CYO,CYO-$!Q-$!Q,CYO+SML*#1E(BY?'RM<"
+	"(\"Q=)3%B*C9G+SML,S]P-D)S-4%R,S]P,3UN,3UN,CYO-$!Q-4%R-$!Q,CYO,#QM"
+	",#QM,3UN,S]P-$!Q-4%R-4%R-$!Q-$!Q-4%R.$1U.D9W.45V-$!Q+#AI)#!A(2U>"
+	"(\"Q=)#!A*35F+CIK,3UN,S]P,CYO,3UN,#QM,3UN,S]P-4%R-4%R,S]P,#QM+3EJ"
+	"+#AI+CIK,3UN,S]P-4%R-D)S-D)S-T-T.45V/$AY/DI[/4EZ.$1U,#QM)S-D(2U>"
+	"'RM<(R]@*35F+CIK,3UN,3UN,CYO,3UN,3UN,CYO-$!Q-T-T-T-T-$!Q,#QM+3EJ"
+	"+#AI+3EJ+CIK,CYO-4%R-T-T.45V.D9W/$AY/TM\\04U^0$Q].T=X,3UN*#1E(2U>"
+	"(2U>)#!A*35F+CIK,3UN,CYO,CYO,S]P,S]P-4%R-T-T.D9W.D9W-T-T,S]P,3UN"
+	"+SML+SML,#QM-$!Q-T-T.45V.D9W.T=X/4EZ0$Q]0DY_04U^/4EZ-$!Q*C9G(R]@"
+	"(BY?)3%B*S=H,#QM,CYO,CYO,CYO,S]P-$!R-D)S.D9W/4EZ/4EZ.T=X.$1U-4%R"
+	"-$!Q,S]P-$!Q-D)S.$1U.D9W/$AY/$AY/DI[0$Q]04U^0T]`/TM\\-D)S*S=H)#!A"
+	"(R]@)S-D+#AI,3UN,S]P,3UN,3UN,CYO-4%R.$1U/$AY/DI[/TM\\/TM\\/4EZ.D9W"
+	".45V.$1U-T-T-T-T.45V/$AY/4EZ/DI[0$Q\\0$Q]04U^1%\"!0$Q]-T-T+#AI)#!A"
+	"(R]@*#1E+CIK,3UN,S]P,3UN,#QM,CYN-4%Q.$1U/$AY/TM\\0$Q]04U^0$Q]/TM\\"
+	"/4EZ.T=X.45V.$1U.D9W/$AY/TM\\0$Q]04U^0DY_0DY_0DY_/DI[-D)S*S=H(R]@"
+	"(R]@*#1E+CIL,C]P,S]P,CYN,3UN,3YO-$%R.$5U/$EZ0$U]0D]_0DY_04U^04U^"
+	"/TM\\/$AY.$1U-T-T.45V/$EZ/TQ]04Y_0DY`0DY_0DU_0$Q].T=X,S]P*35F(2U>"
+	"(R]@)S-D+3IK,3]O,3]O,3YP,3UP,3YQ,T%S-T5U.TEY/DQ\\0$U\\0$Q\\/TM[0$Q\\"
+	"/TM\\.T=X-D)S-D%S.$5U.TEY/DQ\\0$U_04U`0$U^/DQ\\.TEY-T-U+SML)C)C(\"Q="
+	"(BY?)C)C*SAI+SUM+SUN,#UP,#UP,3YQ,C]R-$)R.$9V.DAW.TEW/$AW.T=V.T=X"
+	".D9X.$-U-$!Q-4%Q-T1T.DAX/4M[/DM^/TQ_/4M].DEX-T9V,T!R+3EJ)C)B(\"Q="
+	"(2U>)3%B*39F*SII+3MK+CMM+CMO+SQO,#UP+SUM,D!P-$)Q-4-Q-D)P-4%P-$!P"
+	"-$!P-#]P,S]P-4%Q-T-S.45V.DAX.TA[/4I].TAZ-T5U-4-S,3YN+3EG)S-A(BU="
+	"(BY?)#!A)S1D*3=E*3=G*C=J*SAK+#EL+3IL+#IJ*SEJ+3MJ+CQI+SQH+CMG+CIG"
+	"+SII,3QK,SYM-4%P-D)Q-D)Q-T-T-T1W.45Y.$5W-4-S,T%O,#UL+3AF*#)?(RU<"
+	"(R]@)3%@*#1B*35D*#5D*35F*35G*35G*39G*#9F)S9D*#9D*3=D*C=C*39B*C5C"
+	"*S9E+CEH,CUL-$!O-4!O-#]N,S]N,S]Q-4%S-D)S-4%P,T!L,3QJ+3=D*3%?)2Q;"
+	")3%A)S)A*31B*C5B*31B*31B*#-C)S-C)S)B)3)A)#%@)3)@)C1@)C-?)3)>)C)@"
+	"*#-C+#=F,3II,SUK,SQK,CMJ,#MI,3UL,CUM,CYM,CYK,CUI+SEF+#1A*\"]=)2Q9"
+	")S)A)S)A*3-A*S1A*C-@*C-@)S%?)2]>)\"]>(RY=(R]=)#%>)3)>)#%=(B];(R]="
+	")C%@*31C+S=E,3AF,3EF+SAE+CAE+SEH+CEH+CEG,#EF,#EE+35A*3!<)BU:)BU9"
+	")C%A)C%?*3)?+#-@*S)>*C%?)RY<(RQ:(2Q;(2Q;)#!<)3)=)#%=(B];(\"Y9(BY<"
+	")\"]?)S)A*S-A+35C+39C+39B+#5A*C5D*C5C+#5C+C9C+39B*C)=)BU8)2Q7)RY;"
+	"";
